@@ -1,7 +1,4 @@
-package Hashmap;
-
-import java.util.HashMap;
-import java.util.Map;
+package hashmap;
 
 import static java.util.Objects.hash;
 
@@ -14,14 +11,12 @@ import static java.util.Objects.hash;
 //        size() возвращает размер коллекции
 //        get(Object key) возвращает значение(Object value) по ключу
 
-public class HashMapTest<T, V> implements HashMapMethods {
+public class HashMapTest<K, V> implements HashMapMethods {
 
   Node[] keyTexts = new Node[16];
   int size = 0;
 
   public static void main(String[] args) {
-
-    Node node1 = new Node(11, 11, "qqq", null);
 
     HashMapTest<Integer, String> test = new HashMapTest<>();
 
@@ -35,14 +30,13 @@ public class HashMapTest<T, V> implements HashMapMethods {
 //    test.clear();
     test.remove(11);
     System.out.println(test.get(11));
-
   }
 
-  public V put(Object key, Object text) {
-    return putVal(hash(key), key, text);
+  public V put(K key, V value) {
+    return putVal(hash(key), key, value);
   }
 
-  public V putVal(int hash, Object key, Object value) {
+  public V putVal(int hash, K key, V value) {
     size++;
     int i = 0;
     i = hash % keyTexts.length;
@@ -50,12 +44,11 @@ public class HashMapTest<T, V> implements HashMapMethods {
     return null;
   }
 
-
-  public V get(Object key) {
+  public V get(K key) {
     V tempValue = null;
     for (int i = 0; i < keyTexts.length; i++) {
       if (keyTexts[i] != null) {
-        if (keyTexts[i].getKey() == key) {
+        if (keyTexts[i].getKey().hashCode() == key.hashCode()) {
           tempValue = (V) keyTexts[i].getValue();
         }
       }
@@ -67,7 +60,7 @@ public class HashMapTest<T, V> implements HashMapMethods {
   public void remove(Object key) {
     for (int i = 0; i < keyTexts.length; i++) {
       if (keyTexts[i] != null) {
-        if (keyTexts[i].getKey() == key) {
+        if (keyTexts[i].getKey().hashCode() == key.hashCode()) {
           keyTexts[i] = null;
           size--;
         }
@@ -81,7 +74,6 @@ public class HashMapTest<T, V> implements HashMapMethods {
     for (int i = 0; i < keyTexts.length; i++) {
       keyTexts[i] = null;
     }
-
   }
 
   @Override
